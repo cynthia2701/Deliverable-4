@@ -6,16 +6,23 @@ class Temperature:
 
 
     def __init__(self, value: float | int, unit: str = 'C') -> None:
-        #upper case the unit, else ValueError, or if temp is below 0K
+        """
+        Temperature is initialized with value and unit. Unit is case-insensitive. 
+        ValueError returned if unit is not valid, or if temperature is below
+        absolute zero. 
+
+
+        """
         unit_upper = unit.upper()
-        if unit_upper not in ['C', 'F', 'K']:
-            raise ValueError(f"Invalid unit: {unit}. Must be 'C', 'F', or 'K'.")
+        valid_unit = ['C', 'F', 'K']
+        if unit_upper not in valid_unit:
+            raise ValueError("Unit must be 'C', 'F', or 'K'.")
 
         self._value = float(value)
         self._unit = unit_upper
 
         if self.to_kelvin() < -self.tolerance:
-            raise ValueError(f"Temperature in Kelvin cannot be negative: {value}")
+            raise ValueError("Temperature in Kelvin cannot be negative")
 
 
     @property
